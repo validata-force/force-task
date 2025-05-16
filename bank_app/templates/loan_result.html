@@ -1,0 +1,86 @@
+{% extends 'layout.html' %}
+
+{% block title %}Loan Prediction Result{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="mt-4 mb-4">Loan Approval Prediction Results</h1>
+    
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card shadow mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">Prediction Result</h4>
+                </div>
+                <div class="card-body">
+                    <div class="text-center mb-4">
+                        <h2 class="display-4 {% if result.prediction == 'Approved' %}text-success{% else %}text-danger{% endif %}">
+                            {{ result.prediction }}
+                        </h2>
+                        <p class="lead">Approval Probability: {{ result.probability }}</p>
+                        <p>{{ result.agreement }}</p>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="alert {% if result.knn_prediction == 'Approved' %}alert-success{% else %}alert-danger{% endif %}">
+                                <h5 class="alert-heading">KNN Model</h5>
+                                <p class="mb-0">{{ result.knn_prediction }}</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="alert {% if result.dt_prediction == 'Approved' %}alert-success{% else %}alert-danger{% endif %}">
+                                <h5 class="alert-heading">Decision Tree</h5>
+                                <p class="mb-0">{{ result.dt_prediction }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-6">
+            <div class="card shadow mb-4">
+                <div class="card-header bg-secondary text-white">
+                    <h4 class="mb-0">Application Details</h4>
+                </div>
+                <div class="card-body">
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <th>Annual Income:</th>
+                                <td>${{ '{:,.0f}'.format(loan_data.income[0]) }}</td>
+                            </tr>
+                            <tr>
+                                <th>Credit Score:</th>
+                                <td>{{ loan_data.credit_score[0]|int }}</td>
+                            </tr>
+                            <tr>
+                                <th>Loan Amount:</th>
+                                <td>${{ '{:,.0f}'.format(loan_data.loan_amount[0]) }}</td>
+                            </tr>
+                            <tr>
+                                <th>Loan Term:</th>
+                                <td>{{ loan_data.loan_term[0]|int }} months</td>
+                            </tr>
+                            <tr>
+                                <th>Employment Status:</th>
+                                <td>{{ loan_data.employment_status[0]|capitalize }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row mt-3">
+        <div class="col-12">
+            <div class="d-grid gap-2 d-md-flex">
+                <a href="{{ url_for('loan.index') }}" class="btn btn-primary">New Prediction</a>
+                <a href="{{ url_for('bank.index') }}" class="btn btn-secondary">Back to Banks</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

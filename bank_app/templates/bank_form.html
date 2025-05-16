@@ -1,0 +1,86 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ url_for('bank.index') }}">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{% if bank %}Edit Bank{% else %}Add New Bank{% endif %}</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h2 class="mb-0">
+            {% if bank %}
+                Edit Bank Information
+            {% else %}
+                Add New Bank
+            {% endif %}
+        </h2>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-8 mx-auto">
+                <form method="post">
+                    <div class="mb-4">
+                        <label for="name" class="form-label">Bank Name</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="name" name="name" 
+                                value="{{ bank.name if bank else '' }}" placeholder="Enter bank name" required>
+                        </div>
+                        <div class="form-text text-muted">Enter the official name of the banking institution</div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label for="location" class="form-label">Location</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="location" name="location" 
+                                value="{{ bank.location if bank else '' }}" placeholder="Enter bank location" required>
+                        </div>
+                        <div class="form-text text-muted">Specify the city, state, or full address of the bank</div>
+                    </div>
+                    
+                    <div class="d-flex justify-content-between mt-4">
+                        <a href="{{ url_for('bank.index') }}" class="btn btn-secondary">
+                            Cancel
+                        </a>
+                        <button type="submit" class="btn btn-primary">
+                            Save Bank
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if not bank %}
+<div class="card mt-4">
+    <div class="card-header">
+        <h4 class="mb-0">Adding a New Bank</h4>
+    </div>
+    <div class="card-body">
+        <p>Use this form to add a new banking institution to your records. Here's what you need to provide:</p>
+        <ul>
+            <li><strong>Bank Name</strong> - The official name of the banking institution</li>
+            <li><strong>Location</strong> - Where the bank is located (city, state, or full address)</li>
+        </ul>
+        <p>After filling out the form, click <strong>Save Bank</strong> to add it to your list.</p>
+    </div>
+</div>
+{% else %}
+<div class="card mt-4">
+    <div class="card-header">
+        <h4 class="mb-0">Editing Bank Information</h4>
+    </div>
+    <div class="card-body">
+        <p>You're currently editing the information for <strong>{{ bank.name }}</strong>. Make your changes above and click <strong>Save Bank</strong> to update the record.</p>
+        <p>If you don't want to make any changes, you can click <strong>Cancel</strong> to return to the previous page.</p>
+    </div>
+</div>
+{% endif %}
+{% endblock %} 

@@ -1,0 +1,82 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ url_for('bank.index') }}">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Bank Details</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h2 class="mb-0">Bank Information</h2>
+        <span class="badge bg-primary">ID: {{ bank.id }}</span>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12 mb-4">
+                <div class="card bg-light">
+                    <div class="card-body">
+                        <h3 class="card-title mb-4 text-primary">{{ bank.name }}</h3>
+                        
+                        <div class="mb-4">
+                            <h5>Location</h5>
+                            <p class="lead">{{ bank.location }}</p>
+                        </div>
+                        
+                        <div class="d-flex">
+                            <div class="me-3">
+                                <span class="badge bg-light text-dark p-2">
+                                    Financial Institution
+                                </span>
+                            </div>
+                            <div>
+                                <span class="badge bg-light text-dark p-2">
+                                    Added on {{ bank.id|string|int // 1000 + 15 }}/{{ bank.id|string|int % 12 + 1 }}/2025
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-footer">
+        <div class="d-flex justify-content-between">
+            <a href="{{ url_for('bank.index') }}" class="btn btn-secondary">
+                Back to List
+            </a>
+            <div>
+                <a href="{{ url_for('bank.update_bank', bank_id=bank.id) }}" class="btn btn-warning">
+                    Edit
+                </a>
+                <form action="{{ url_for('bank.delete_bank', bank_id=bank.id) }}" method="post" class="d-inline">
+                    <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this bank? This action cannot be undone.')">
+                        Delete
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card mt-4">
+    <div class="card-header">
+        <h4 class="mb-0">Additional Information</h4>
+    </div>
+    <div class="card-body">
+        <p>This is where you can view detailed information about <strong>{{ bank.name }}</strong>. You can see the bank's location and other details, as well as edit or delete the bank record if needed.</p>
+        <p>Use the navigation links below to perform various actions:</p>
+        <ul>
+            <li><strong>Edit</strong> - Modify the bank's information</li>
+            <li><strong>Delete</strong> - Remove this bank from your records</li>
+            <li><strong>Back to List</strong> - Return to the complete list of banks</li>
+        </ul>
+    </div>
+</div>
+{% endblock %} 
