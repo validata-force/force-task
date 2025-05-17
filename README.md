@@ -1,7 +1,7 @@
 ## Setup 
 ```bash
-git clone <repository-url>
-cd validata-task-force
+git clone https://github.com/validata-force/force-task.git
+cd force-task
 ```
 
 ```bash
@@ -12,9 +12,16 @@ source .venv/bin/activate
 ```bash
 pip install -r requirements.txt
 ```
-```bash
-source .venv/bin/activate
+## If you occour Troubleshootion please,
 
+If you encounter build errors with numpy or other packages install packages individually:
+```bash
+pip install setuptools wheel
+pip install Flask==2.3.3 Flask-SQLAlchemy==3.1.1 python-dotenv==1.0.0 pytest==7.4.0 requests==2.31.0
+pip install numpy pandas scikit-learn matplotlib seaborn
+```
+
+```bash
 cd loan_prediction
 
 python train.py
