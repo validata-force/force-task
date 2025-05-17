@@ -23,7 +23,7 @@ pip install numpy pandas scikit-learn matplotlib seaborn
 
 ```bash
 cd loan_prediction
-
+pip install -r requirements.txt
 python train.py
 ```
 ```bash
